@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: service-a
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/microservices_demo
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: service-a-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
