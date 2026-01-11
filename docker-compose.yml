@@ -3,9 +3,9 @@ services:
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_DB: service_c_db
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
 
@@ -42,8 +42,15 @@ services:
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
+    container_name: microservices-demo-kafka-ui
     ports:
       - "8085:8080"
     environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+      # Самое важное: указываем внутренний адрес брокера (kafka:29092)
       KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    depends_on:
+      - kafka
+      - zookeeper
